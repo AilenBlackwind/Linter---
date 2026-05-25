@@ -1,12 +1,12 @@
 import re
 from linter.config import Config
 
-_BREAK_INLINE_RE = re.compile(r'<!br[pc]>', re.IGNORECASE)
+_BREAK_INLINE_RE = re.compile(r'‹!br[pc]›', re.IGNORECASE)
 _BREAK_HTML_RE = re.compile(r'<!--break:(page|column)-->')
 
 
 def _replace_break(m):
-    return '<!--break:page-->' if m.group(0).lower() == '<!brp>' else '<!--break:column-->'
+    return '<!--break:page-->' if m.group(0).lower() == '‹!brp›' else '<!--break:column-->'
 
 
 def preprocess_markdown(md_text: str, config: Config) -> str:

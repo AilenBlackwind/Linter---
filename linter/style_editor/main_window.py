@@ -200,7 +200,7 @@ class StyleEditorMainWindow(QMainWindow):
             "color_rules": []
         }
 
-        self._mappings["<!" + name + ">"] = {
+        self._mappings["‹!" + name + "›"] = {
             "table": "\u041F\u0440\u043E\u0441\u0442\u0430\u044F \u0442\u0430\u0431\u043B\u0438\u0446\u0430 1",
             "header": self.structure_panel.get_header_style() or "Table Header 1",
             "text": self.structure_panel.get_text_style() or "Table Text 1",
@@ -328,10 +328,10 @@ class StyleEditorMainWindow(QMainWindow):
             del self._mappings[old_tag]
 
         if tag:
-            if not tag.startswith("<!"):
-                tag = "<!" + tag
-            if not tag.endswith(">"):
-                tag = tag + ">"
+            if not tag.startswith("‹!"):
+                tag = "‹!" + tag
+            if not tag.endswith("›"):
+                tag = tag + "›"
             self._mappings[tag] = {
                 "table": "\u041F\u0440\u043E\u0441\u0442\u0430\u044F \u0442\u0430\u0431\u043B\u0438\u0446\u0430 1",
                 "header": self.structure_panel.get_header_style() or "Table Header 1",

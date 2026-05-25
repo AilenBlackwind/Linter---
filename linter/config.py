@@ -34,19 +34,19 @@ DEFAULT_TABLE_PRESETS = {
 }
 
 DEFAULT_TABLE_MAPPINGS = {
-    "<!zebra>": {
+    "‹!zebra›": {
         "table": "Простая таблица 1",
         "header": "Table Header 1",
         "text": "Table Text 1",
         "preset": "zebra"
     },
-    "<!plain>": {
+    "‹!plain›": {
         "table": "Простая таблица 2",
         "header": "Table Header 2",
         "text": "Table Text 2",
         "preset": "plain"
     },
-    "<!fancy>": {
+    "‹!fancy›": {
         "table": "Простая таблица 1",
         "header": "Table Header 1",
         "text": "Table Text 1",

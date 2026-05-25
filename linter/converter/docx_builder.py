@@ -424,7 +424,7 @@ class DocxBuilder:
 
     def _process_table(self, table_node: dict, table_config: dict = None) -> None:
         if table_config is None:
-            table_config = self.config.table_mappings.get("<!plain>", {
+            table_config = self.config.table_mappings.get("‹!plain›", {
                 "table": "Простая таблица 2",
                 "header": "Table Header 2",
                 "text": "Table Text 2",

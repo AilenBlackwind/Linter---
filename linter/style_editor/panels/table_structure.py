@@ -27,7 +27,7 @@ class TableStructurePanel(QWidget):
         tag_group = QGroupBox("\u0422\u0435\u0433 \u0432 Markdown")
         tag_layout = QVBoxLayout(tag_group)
         self.tag_edit = QLineEdit()
-        self.tag_edit.setPlaceholderText("<!style_name>")
+        self.tag_edit.setPlaceholderText("‹!style_name›")
         self.tag_edit.editingFinished.connect(self._on_tag_changed)
         tag_layout.addWidget(self.tag_edit)
         layout.addWidget(tag_group)

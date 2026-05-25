@@ -1,29 +1,29 @@
 {
-  "<!plain>": {
+  "‹!plain›": {
     "table": "Простая таблица 2",
     "header": "Table Header 2",
     "text": "Table Text 2",
     "preset": "plain"
   },
-  "<!fancy>": {
+  "‹!fancy›": {
     "table": "Простая таблица 1",
     "header": "Table Header 1",
     "text": "Table Text 1",
     "preset": "fancy"
   },
-  "<!advanced>": {
+  "‹!advanced›": {
     "table": "Простая таблица 1",
     "header": "Table Header 1",
     "text": "Table Text 1",
     "preset": "advanced_zebra"
   },
-  "<!elements>": {
+  "‹!elements›": {
     "table": "Простая таблица 1",
     "header": "Elements Header",
     "text": "Elements Text",
     "preset": "element_colors"
   },
-  "<!zebra>": {
+  "‹!zebra›": {
     "table": "Простая таблица 1",
     "header": "Zebra Header",
     "text": "Zebra Text",
