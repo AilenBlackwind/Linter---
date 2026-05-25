@@ -1,0 +1,60 @@
+Date : 2026-05-13 10:22:36
+Directory : f:\Linter+++\linter
+Total : 26 files,  3513 codes, 0 comments, 753 blanks, all 4266 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Python   |         26 |      3,513 |          0 |        753 |      4,266 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                          | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                             |         26 |      3,513 |          0 |        753 |      4,266 |
+| . (Files)                                                     |          4 |        233 |          0 |         56 |        289 |
+| converter                                                     |          9 |      1,623 |          0 |        328 |      1,951 |
+| converter (Files)                                             |          3 |        640 |          0 |        118 |        758 |
+| converter\tables                                              |          6 |        983 |          0 |        210 |      1,193 |
+| converter\tables (Files)                                      |          2 |        338 |          0 |         79 |        417 |
+| converter\tables\advanced                                     |          4 |        645 |          0 |        131 |        776 |
+| style_editor                                                  |         13 |      1,657 |          0 |        369 |      2,026 |
+| style_editor (Files)                                          |          7 |        755 |          0 |        173 |        928 |
+| style_editor\panels                                           |          3 |        748 |          0 |        148 |        896 |
+| style_editor\widgets                                          |          3 |        154 |          0 |         48 |        202 |
++---------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                      | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------+----------+------------+------------+------------+------------+
+| f:\Linter+++\linter\__init__.py                               | Python   |          0 |          0 |          1 |          1 |
+| f:\Linter+++\linter\cli.py                                    | Python   |         26 |          0 |         10 |         36 |
+| f:\Linter+++\linter\config.py                                 | Python   |        204 |          0 |         42 |        246 |
+| f:\Linter+++\linter\converter\__init__.py                     | Python   |          0 |          0 |          1 |          1 |
+| f:\Linter+++\linter\converter\docx_builder.py                 | Python   |        546 |          0 |         90 |        636 |
+| f:\Linter+++\linter\converter\markdown_processor.py           | Python   |         94 |          0 |         27 |        121 |
+| f:\Linter+++\linter\converter\tables\__init__.py              | Python   |          0 |          0 |          1 |          1 |
+| f:\Linter+++\linter\converter\tables\advanced\__init__.py     | Python   |         23 |          0 |          4 |         27 |
+| f:\Linter+++\linter\converter\tables\advanced\models.py       | Python   |        286 |          0 |         49 |        335 |
+| f:\Linter+++\linter\converter\tables\advanced\renderer.py     | Python   |        271 |          0 |         62 |        333 |
+| f:\Linter+++\linter\converter\tables\advanced\rules_engine.py | Python   |         65 |          0 |         16 |         81 |
+| f:\Linter+++\linter\converter\tables\processor.py             | Python   |        338 |          0 |         78 |        416 |
+| f:\Linter+++\linter\style_editor\__init__.py                  | Python   |          2 |          0 |          2 |          4 |
+| f:\Linter+++\linter\style_editor\__main__.py                  | Python   |          3 |          0 |          2 |          5 |
+| f:\Linter+++\linter\style_editor\main.py                      | Python   |         31 |          0 |         12 |         43 |
+| f:\Linter+++\linter\style_editor\main_window.py               | Python   |        595 |          0 |        124 |        719 |
+| f:\Linter+++\linter\style_editor\mapping_utils.py             | Python   |          7 |          0 |          4 |         11 |
+| f:\Linter+++\linter\style_editor\panels\__init__.py           | Python   |          3 |          0 |          2 |          5 |
+| f:\Linter+++\linter\style_editor\panels\color_rules.py        | Python   |        269 |          0 |         57 |        326 |
+| f:\Linter+++\linter\style_editor\panels\properties.py         | Python   |        476 |          0 |         89 |        565 |
+| f:\Linter+++\linter\style_editor\style_utils.py               | Python   |        103 |          0 |         22 |        125 |
+| f:\Linter+++\linter\style_editor\utils.py                     | Python   |         14 |          0 |          7 |         21 |
+| f:\Linter+++\linter\style_editor\widgets\__init__.py          | Python   |          3 |          0 |          2 |          5 |
+| f:\Linter+++\linter\style_editor\widgets\color_picker.py      | Python   |         53 |          0 |         17 |         70 |
+| f:\Linter+++\linter\style_editor\widgets\grid_cell.py         | Python   |         98 |          0 |         29 |        127 |
+| f:\Linter+++\linter\utils.py                                  | Python   |          3 |          0 |          3 |          6 |
+| Total                                                         |          |      3,513 |          0 |        753 |      4,266 |
++---------------------------------------------------------------+----------+------------+------------+------------+------------+

@@ -1,0 +1,68 @@
+{
+  "infobox_styles": {
+    "info": {
+      "style_name": "Infobox Info",
+      "multi_paragraph": true,
+      "opening_tag": ":::!info",
+      "closing_tag": ":::",
+      "list_bullet_style": "List Info",
+      "list_number_style": ""
+    },
+    "warning": {
+      "style_name": "Infobox Warning",
+      "multi_paragraph": true,
+      "opening_tag": ":::!warning",
+      "closing_tag": ":::",
+      "list_bullet_style": "List Warning",
+      "list_number_style": ""
+    },
+    "rule": {
+      "style_name": "Infobox Rule",
+      "multi_paragraph": true,
+      "opening_tag": ":::!rule",
+      "closing_tag": ":::",
+      "list_bullet_style": "",
+      "list_number_style": ""
+    },
+    "example": {
+      "style_name": "Infobox Example",
+      "multi_paragraph": true,
+      "opening_tag": ":::!example",
+      "closing_tag": ":::",
+      "list_bullet_style": "",
+      "list_number_style": ""
+    },
+    "plain": {
+      "style_name": "Elements Text",
+      "multi_paragraph": true,
+      "opening_tag": ":::plain",
+      "closing_tag": ":::",
+      "list_bullet_style": "",
+      "list_number_style": ""
+    }
+  },
+  "inline_styles": {
+    "single_paragraph": {
+      "Info": {
+        "style_name": "Infobox Info",
+        "tag": ":::!info"
+      },
+      "Warning": {
+        "style_name": "Infobox Warning",
+        "tag": ":::!warning"
+      },
+      "Rule": {
+        "style_name": "Infobox Rule",
+        "tag": ":::!rule"
+      },
+      "Example": {
+        "style_name": "Infobox Example",
+        "tag": ":::!example"
+      },
+      "tag": {
+        "style_name": "Text Tag",
+        "tag": ":::tag"
+      }
+    }
+  }
+}

@@ -1,0 +1,1988 @@
+{
+  "plain": {
+    "renderer": "standard",
+    "border_color": "666666",
+    "border_size": 8,
+    "header_fill": "D9D9D9",
+    "band_fill": null
+  },
+  "zebra": {
+    "renderer": "zebra",
+    "layout": "auto",
+    "cell_margins": {
+      "top": 90,
+      "start": 110,
+      "bottom": 90,
+      "end": 110
+    },
+    "default_borders": {},
+    "default_shading": null,
+    "empty_row_top": false,
+    "empty_row_bottom": true,
+    "empty_row_height": 600,
+    "fit_to_page": true,
+    "table_width": null,
+    "column_widths": null,
+    "row_heights": null,
+    "row_types": {},
+    "cell_overrides": {
+      "C2": {
+        "borders": {
+          "top": {
+            "color": "666666",
+            "size": 1,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "F2": {
+        "borders": {
+          "top": {
+            "color": "666666",
+            "size": 1,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "B2": {
+        "borders": {
+          "top": {
+            "color": "666666",
+            "size": 1,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "E2": {
+        "borders": {
+          "top": {
+            "color": "666666",
+            "size": 1,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "A2": {
+        "borders": {
+          "top": {
+            "color": "666666",
+            "size": 1,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "D2": {
+        "borders": {
+          "top": {
+            "color": "666666",
+            "size": 1,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "A5": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "EBF6FF",
+            "size": 1,
+            "val": "single"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "E4": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "D5": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "EBF6FF",
+            "size": 1,
+            "val": "single"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "B4": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "E6": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 100,
+            "val": "single"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "B6": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 100,
+            "val": "single"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "C3": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "EBF6FF",
+            "size": 1,
+            "val": "single"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "F3": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "EBF6FF",
+            "size": 1,
+            "val": "single"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "C5": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "EBF6FF",
+            "size": 1,
+            "val": "single"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "A4": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "F5": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "EBF6FF",
+            "size": 1,
+            "val": "single"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "D4": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "A6": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 100,
+            "val": "single"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "D6": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 100,
+            "val": "single"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "E3": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "EBF6FF",
+            "size": 1,
+            "val": "single"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "B3": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "EBF6FF",
+            "size": 1,
+            "val": "single"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "C4": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "B5": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "EBF6FF",
+            "size": 1,
+            "val": "single"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "F4": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "C6": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 100,
+            "val": "single"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "E5": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "EBF6FF",
+            "size": 1,
+            "val": "single"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "F6": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 100,
+            "val": "single"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "A3": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "EBF6FF",
+            "size": 1,
+            "val": "single"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "D3": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "EBF6FF",
+            "size": 1,
+            "val": "single"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "C1": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "F1": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "B1": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "E1": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "A1": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      },
+      "D1": {
+        "borders": {
+          "top": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "bottom": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "left": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          },
+          "right": {
+            "color": "000000",
+            "size": 0,
+            "val": "nil"
+          }
+        }
+      }
+    },
+    "color_rules": [],
+    "text_wrap": "around",
+    "left_from_text": 0,
+    "right_from_text": 0
+  },
+  "fancy": {
+    "renderer": "standard",
+    "border_color": "5B6C8F",
+    "border_size": 10,
+    "header_fill": "DCE6F1",
+    "band_fill": "EEF3F8"
+  },
+  "advanced_zebra": {
+    "renderer": "advanced",
+    "layout": "auto",
+    "cell_margins": {
+      "top": 90,
+      "start": 110,
+      "bottom": 90,
+      "end": 110
+    },
+    "default_borders": {
+      "all": {
+        "color": "666666",
+        "size": 8,
+        "val": "single"
+      }
+    },
+    "default_shading": "FFFFFF",
+    "fit_to_page": true,
+    "table_width": null,
+    "column_widths": null,
+    "row_heights": null,
+    "row_types": {
+      "header": {
+        "shading": "D9D9D9",
+        "bold": true,
+        "repeat": true
+      },
+      "odd": {
+        "shading": "EEF3F8"
+      }
+    },
+    "cell_overrides": {},
+    "color_rules": [
+      {
+        "name": "Огонь",
+        "trigger": "equals",
+        "value": "1",
+        "case_sensitive": false,
+        "column": null,
+        "shading": "FF9900",
+        "font_color": "000000",
+        "bold": true,
+        "italic": null,
+        "priority": 10
+      }
+    ],
+    "text_wrap": "around",
+    "left_from_text": 0,
+    "right_from_text": 0
+  },
+  "element_colors": {
+    "renderer": "advanced",
+    "layout": "auto",
+    "cell_margins": {
+      "top": 90,
+      "start": 110,
+      "bottom": 90,
+      "end": 110
+    },
+    "default_borders": {
+      "all": {
+        "color": "666666",
+        "size": 8,
+        "val": "single"
+      }
+    },
+    "default_shading": "D9D9D9",
+    "empty_row_top": false,
+    "empty_row_bottom": false,
+    "empty_row_height": 200,
+    "fit_to_page": true,
+    "table_width": null,
+    "column_widths": [
+      0.68,
+      0.08,
+      0.08,
+      0.08,
+      0.08,
+      0.0
+    ],
+    "row_heights": null,
+    "row_types": {},
+    "cell_overrides": {
+      "A5": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "E4": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "D5": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "B4": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "E6": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "B6": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "C3": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "A2": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "F3": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "D2": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "C5": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "A4": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "F5": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "D4": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "A6": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "D6": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "E3": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "C2": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "B3": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "F2": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "C4": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "B5": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "F4": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "C6": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "E5": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "F6": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "B2": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "A3": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "E2": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "D3": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 8,
+            "val": "single"
+          }
+        }
+      },
+      "B1": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          }
+        }
+      },
+      "E1": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          }
+        }
+      },
+      "A1": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          }
+        }
+      },
+      "D1": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          }
+        }
+      },
+      "C1": {
+        "shading": "EEF4F8",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          }
+        }
+      },
+      "F1": {
+        "shading": "FFFFFF",
+        "borders": {
+          "top": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "bottom": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "left": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          },
+          "right": {
+            "color": "FFFFFF",
+            "size": 40,
+            "val": "single"
+          }
+        }
+      }
+    },
+    "color_rules": [
+      {
+        "name": "B - Синий",
+        "trigger": "has_text",
+        "value": "",
+        "case_sensitive": false,
+        "column": "B",
+        "shading": "A3C3F4",
+        "font_color": "FFFFFF",
+        "bold": true,
+        "italic": null,
+        "priority": 10
+      },
+      {
+        "name": "C - Зелёный",
+        "trigger": "has_text",
+        "value": "",
+        "case_sensitive": false,
+        "column": "C",
+        "shading": "B6D7A8",
+        "font_color": "FFFFFF",
+        "bold": true,
+        "italic": null,
+        "priority": 10
+      },
+      {
+        "name": "D - Оранжевый",
+        "trigger": "has_text",
+        "value": "",
+        "case_sensitive": false,
+        "column": "D",
+        "shading": "F9CB9C",
+        "font_color": "FFFFFF",
+        "bold": true,
+        "italic": null,
+        "priority": 10
+      },
+      {
+        "name": "E - Фиолетовый",
+        "trigger": "has_text",
+        "value": "",
+        "case_sensitive": false,
+        "column": "E",
+        "shading": "D5A7BE",
+        "font_color": "FFFFFF",
+        "bold": true,
+        "italic": null,
+        "priority": 10
+      }
+    ],
+    "text_wrap": "inline",
+    "left_from_text": 0,
+    "right_from_text": 0
+  },
+  "HeaderTable": {
+    "renderer": "advanced",
+    "layout": "auto",
+    "cell_margins": {
+      "top": 90,
+      "start": 110,
+      "bottom": 90,
+      "end": 110
+    },
+    "default_borders": {},
+    "default_shading": null,
+    "empty_row_top": false,
+    "empty_row_bottom": true,
+    "empty_row_height": 300,
+    "fit_to_page": true,
+    "table_width": null,
+    "column_widths": [
+      0.26,
+      0.16,
+      0.16,
+      0.26,
+      0.16,
+      0.0
+    ],
+    "row_heights": null,
+    "row_types": {},
+    "cell_overrides": {},
+    "color_rules": [],
+    "text_wrap": "around",
+    "left_from_text": 0,
+    "right_from_text": 0
+  }
+}

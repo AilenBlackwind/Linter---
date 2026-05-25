@@ -1,0 +1,5 @@
+<!--block_start:info-->
+This paragraph has a red-line indent from style →
+
+This paragraph ALSO has red-line indent from style, no arrow
+<!--block_end:info-->

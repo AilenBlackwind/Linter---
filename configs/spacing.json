@@ -1,0 +1,31 @@
+{
+  "before_heading": 25,
+  "after_heading": 0,
+  "after_list": 5,
+  "after_table": 0,
+  "table_before_heading": 25,
+  "before_table": 15,
+  "no_indent_after_block_types": [
+    "heading",
+    "list",
+    "table",
+    "thematic_break",
+    "info",
+    "Info",
+    "example",
+    "Warning",
+    "Example",
+    "warning",
+    "Rule",
+    "rule",
+    "plain",
+    "Infobox Warning",
+    "Infobox Rule",
+    "Infobox Example",
+    "Elements Text",
+    "Infobox Info",
+    "Break Text",
+    "new_style"
+  ],
+  "no_indent_if_first_bold": true
+}

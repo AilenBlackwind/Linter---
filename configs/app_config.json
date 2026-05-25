@@ -1,0 +1,8 @@
+{
+  "paths": {
+    "input_md": "F:/ObsidianVaults/MainVault/Магнум Опус/БИОМЫ.md",
+    "output_docx": "F:/Linter+++/Биомы.docx",
+    "template": "workspace/templates/RpRef1.docx"
+  },
+  "open_after_convert": false
+}
