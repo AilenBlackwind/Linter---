@@ -1,9 +1,9 @@
 {
   "before_heading": 25,
   "after_heading": 0,
-  "after_list": 5,
+  "after_list": 8,
   "after_table": 0,
-  "table_before_heading": 25,
+  "table_before_heading": 0,
   "before_table": 15,
   "no_indent_after_block_types": [
     "heading",
@@ -25,7 +25,8 @@
     "Elements Text",
     "Infobox Info",
     "Break Text",
-    "new_style"
+    "new_style",
+    "Mage Example"
   ],
   "no_indent_if_first_bold": true
 }

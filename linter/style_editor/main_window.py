@@ -514,19 +514,9 @@ class StyleEditorMainWindow(QMainWindow):
             paths = ac.get("paths", {})
 
             template_raw = paths.get("template", "")
-            input_raw = paths.get("input_md", "")
-            output_raw = paths.get("output_docx", "")
-
             template_path = Path(template_raw) if template_raw else root / "workspace" / "templates" / "RpRef1.docx"
-            input_md_path = Path(input_raw) if input_raw else root / "workspace" / "input" / "input.md"
-            output_path = Path(output_raw) if output_raw else root / "workspace" / "output" / "Result.docx"
-
             if not template_path.is_absolute():
                 template_path = root / template_path
-            if not input_md_path.is_absolute():
-                input_md_path = root / input_md_path
-            if not output_path.is_absolute():
-                output_path = root / output_path
 
             if not template_path.exists():
                 QMessageBox.warning(
@@ -536,29 +526,83 @@ class StyleEditorMainWindow(QMainWindow):
                 self.status_bar.showMessage("\u041E\u0448\u0438\u0431\u043A\u0430: \u0448\u0430\u0431\u043B\u043E\u043D \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D")
                 return
 
-            if not input_md_path.exists():
-                QMessageBox.warning(
-                    self, "\u041E\u0448\u0438\u0431\u043A\u0430",
-                    f"MD \u0444\u0430\u0439\u043B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D: {input_md_path}"
-                )
-                self.status_bar.showMessage("\u041E\u0448\u0438\u0431\u043A\u0430: MD \u0444\u0430\u0439\u043B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D")
-                return
-
             config = load_configuration()
+            batch_mode = ac.get("batch_mode", False)
 
-            raw_markdown = input_md_path.read_text(encoding="utf-8")
-            processed_md = preprocess_markdown(raw_markdown, config)
+            if batch_mode:
+                input_folder_raw = paths.get("input_md", "")
+                output_folder_raw = paths.get("output_docx", "")
+                input_folder = Path(input_folder_raw) if input_folder_raw else None
+                output_folder = Path(output_folder_raw) if output_folder_raw else None
 
-            builder = DocxBuilder(template_path, config)
-            builder.build(processed_md)
+                if not input_folder or not input_folder.exists() or not input_folder.is_dir():
+                    QMessageBox.warning(self, "\u041E\u0448\u0438\u0431\u043A\u0430", "\u041F\u0430\u043F\u043A\u0430 \u0441 MD \u0444\u0430\u0439\u043B\u0430\u043C\u0438 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430")
+                    self.status_bar.showMessage("\u041E\u0448\u0438\u0431\u043A\u0430: \u043F\u0430\u043F\u043A\u0430 \u0441 MD \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430")
+                    return
 
-            ensure_output_dir(output_path.parent)
-            builder.save(output_path)
-            self.status_bar.showMessage(f"\u0413\u043E\u0442\u043E\u0432\u043E! \u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u043E: {output_path}")
+                if not output_folder:
+                    output_folder = input_folder
+                if not output_folder.is_dir():
+                    output_folder.mkdir(parents=True, exist_ok=True)
 
-            if config.open_after_convert:
-                abs_path = output_path.resolve()
-                os.startfile(abs_path)
+                md_files = sorted(input_folder.glob("*.md"))
+                if not md_files:
+                    QMessageBox.warning(self, "\u041E\u0448\u0438\u0431\u043A\u0430", f"MD \u0444\u0430\u0439\u043B\u044B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B \u0432 {input_folder}")
+                    self.status_bar.showMessage("\u041E\u0448\u0438\u0431\u043A\u0430: MD \u0444\u0430\u0439\u043B\u044B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B")
+                    return
+
+                success_count = 0
+                for md_file in md_files:
+                    output_path = output_folder / f"{md_file.stem}.docx"
+                    try:
+                        raw_markdown = md_file.read_text(encoding="utf-8")
+                        processed_md = preprocess_markdown(raw_markdown, config)
+                        builder = DocxBuilder(template_path, config)
+                        builder.build(processed_md)
+                        ensure_output_dir(output_path.parent)
+                        builder.save(output_path)
+                        success_count += 1
+                        print(f"[OK] {md_file.name} \u2192 {output_path.name}")
+                    except Exception as e:
+                        print(f"[-] \u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0435 {md_file.name}: {e}")
+
+                self.status_bar.showMessage(f"\u0413\u043E\u0442\u043E\u0432\u043E! \u041E\u0431\u0440\u0430\u0431\u043E\u0442\u0430\u043D\u043E {success_count}/{len(md_files)} \u0444\u0430\u0439\u043B\u043E\u0432")
+            else:
+                input_raw = paths.get("input_md", "")
+                output_raw = paths.get("output_docx", "")
+
+                input_md_path = Path(input_raw) if input_raw else root / "workspace" / "input" / "input.md"
+                if not input_md_path.is_absolute():
+                    input_md_path = root / input_md_path
+
+                if not input_md_path.exists():
+                    QMessageBox.warning(
+                        self, "\u041E\u0448\u0438\u0431\u043A\u0430",
+                        f"MD \u0444\u0430\u0439\u043B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D: {input_md_path}"
+                    )
+                    self.status_bar.showMessage("\u041E\u0448\u0438\u0431\u043A\u0430: MD \u0444\u0430\u0439\u043B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D")
+                    return
+
+                if not output_raw.strip():
+                    output_path = input_md_path.with_suffix(".docx")
+                else:
+                    output_path = Path(output_raw)
+                    if not output_path.is_absolute():
+                        output_path = root / output_path
+
+                raw_markdown = input_md_path.read_text(encoding="utf-8")
+                processed_md = preprocess_markdown(raw_markdown, config)
+
+                builder = DocxBuilder(template_path, config)
+                builder.build(processed_md)
+
+                ensure_output_dir(output_path.parent)
+                builder.save(output_path)
+                self.status_bar.showMessage(f"\u0413\u043E\u0442\u043E\u0432\u043E! \u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u043E: {output_path}")
+
+                if config.open_after_convert:
+                    abs_path = output_path.resolve()
+                    os.startfile(abs_path)
 
         except Exception as e:
             import traceback

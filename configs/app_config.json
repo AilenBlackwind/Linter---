@@ -1,8 +1,9 @@
 {
   "paths": {
-    "input_md": "F:/ObsidianVaults/MainVault/Магнум Опус/ОСОБЫЕ СПОСОБНОСТИ.md",
-    "output_docx": "F:/Linter+++/Особые Способности.docx",
-    "template": "workspace/templates/RpRef1.docx"
+    "input_md": "F:/ObsidianVaults/MainVault/Маг — Восхождение/Правила",
+    "output_docx": "F:/ObsidianVaults/MainVault/Маг — Восхождение/Экспорт",
+    "template": "F:/Linter+++/workspace/templates/MageRef.docx"
   },
-  "open_after_convert": false
+  "open_after_convert": false,
+  "batch_mode": true
 }

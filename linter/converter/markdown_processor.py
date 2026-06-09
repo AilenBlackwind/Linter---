@@ -71,6 +71,11 @@ def preprocess_markdown(md_text: str, config: Config) -> str:
 
     open_stack = []
 
+    line_style_tags = set()
+    for key in config.line_styles:
+        line_style_tags.add(key.lower())
+    LINE_STYLE_RE = re.compile(r'^\s*#st/(\S+)\s*$', re.IGNORECASE)
+
     for i in range(n):
         line = lines[i]
         stripped_lower = line.strip().lower()
@@ -141,6 +146,11 @@ def preprocess_markdown(md_text: str, config: Config) -> str:
                 is_only_tag_or_close = True
 
         if is_only_tag_or_close:
+            continue
+
+        m = LINE_STYLE_RE.match(line)
+        if m and m.group(1).lower() in line_style_tags:
+            new_lines.append(f"<!--line_style:{m.group(1)}-->")
             continue
 
         line = _BREAK_INLINE_RE.sub(_replace_break, line)

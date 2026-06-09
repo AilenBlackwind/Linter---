@@ -22,7 +22,7 @@ from linter.converter.tables.processor import (
 )
 
 
-def _force_auto_height_and_cols(section, count):
+def _force_auto_height_and_cols(section, count, space=420, equal_width=True):
     sectPr = section._sectPr
     for va in sectPr.xpath('./w:vAlign'):
         sectPr.remove(va)
@@ -31,8 +31,8 @@ def _force_auto_height_and_cols(section, count):
         cols = OxmlElement('w:cols')
         sectPr.insert(0, cols)
     cols.set(qn('w:num'), str(count))
-    cols.set(qn('w:space'), '420')
-    cols.set(qn('w:equalWidth'), '1')
+    cols.set(qn('w:space'), str(space))
+    cols.set(qn('w:equalWidth'), '1' if equal_width else '0')
 
 
 def _clear_document_content(doc):
@@ -46,7 +46,15 @@ def _clear_document_content(doc):
         body.remove(section._element)
 
 
+def _disable_contextual_spacing(paragraph):
+    pPr = paragraph._element.get_or_add_pPr()
+    cs = pPr.find(qn('w:contextualSpacing'))
+    if cs is not None:
+        pPr.remove(cs)
+
+
 def _add_space_after(paragraph, points=25):
+    _disable_contextual_spacing(paragraph)
     pPr = paragraph._element.get_or_add_pPr()
     spacing = pPr.find(qn('w:spacing'))
     if spacing is None:
@@ -65,6 +73,7 @@ def _set_space_before(paragraph, points=0):
 
 
 def _set_space_after(paragraph, points=0):
+    _disable_contextual_spacing(paragraph)
     pPr = paragraph._element.get_or_add_pPr()
     spacing = pPr.find(qn('w:spacing'))
     if spacing is None:
@@ -400,6 +409,9 @@ class DocxBuilder:
         self._suppress_next_first_line_indent = False
         self._suppress_next_first_line_indent_from_arrow = False
         self._hyperlink_style_id = _DEFAULT_HYPERLINK_STYLE
+        self._cols_num = 1
+        self._cols_space = 420
+        self._cols_equal_width = True
         self._markdown_parser = None
 
     def build(self, processed_md: str) -> None:
@@ -408,7 +420,14 @@ class DocxBuilder:
         self._hyperlink_style_id = _resolve_character_style_id(self.doc, _DEFAULT_HYPERLINK_STYLE)
 
         if self.doc.sections:
-            _force_auto_height_and_cols(self.doc.sections[0], 2)
+            sect_pr = self.doc.sections[0]._sectPr
+            template_cols = sect_pr.find(qn('w:cols'))
+            if template_cols is not None:
+                self._cols_num = int(template_cols.get(qn('w:num'), 2))
+                self._cols_space = int(template_cols.get(qn('w:space'), 420))
+                eq = template_cols.get(qn('w:equalWidth'), '1')
+                self._cols_equal_width = eq == '1'
+            _force_auto_height_and_cols(self.doc.sections[0], self._cols_num, self._cols_space, self._cols_equal_width)
 
         print("[*] Верстаю документ...")
 
@@ -657,6 +676,30 @@ class DocxBuilder:
                 i += 1
                 continue
 
+            if check_text.startswith("<!--line_style:"):
+                style_key = self._get_line_style_key(check_text)
+                style_name = self._get_line_style_name(style_key)
+                last_paragraph = self.doc.add_paragraph("\u00a0", style=style_name)
+                has_content = True
+                self._last_block_type = 'thematic_break'
+                self._last_para_style_name = style_name
+                self._last_paragraph = last_paragraph
+                for jj in range(i + 1, n):
+                    nn = ast[jj]
+                    if nn.get('type') == 'blank_line':
+                        continue
+                    if nn.get('type') in ('paragraph', 'block_html'):
+                        t = _get_text_recursive(nn)
+                        if t.strip().startswith('<!--'):
+                            continue
+                    if nn.get('type') == 'heading':
+                        nl = nn.get('attrs', {}).get('level', 1)
+                        if nl <= 3:
+                            _add_space_after(last_paragraph, self.config.before_heading_spacing)
+                    break
+                i += 1
+                continue
+
             current_block_type = 'paragraph'
             if n_type == 'heading':
                 current_block_type = 'heading'
@@ -680,6 +723,8 @@ class DocxBuilder:
                     txt = _get_text_recursive(next_node)
                     stripped = txt.strip()
                     if stripped.startswith('<!--'):
+                        if stripped.startswith('<!--line_style:'):
+                            break
                         continue
                     if stripped.lower() in self.config.table_mappings:
                         continue
@@ -768,7 +813,7 @@ class DocxBuilder:
             h.alignment = 1
 
             sec_text = self.doc.add_section(WD_SECTION.CONTINUOUS)
-            _force_auto_height_and_cols(sec_text, 2)
+            _force_auto_height_and_cols(sec_text, self._cols_num, self._cols_space, self._cols_equal_width)
             return None
         else:
             self.doc.add_heading(text, level=level)
@@ -850,19 +895,26 @@ class DocxBuilder:
         text = last_run.text
         if not text:
             return
-        m = re.search(r'(›+)\s*$', text)
+        m = re.search(r'([›→⋙]+)\s*$', text)
         if m:
-            arrows = m.group(1)
-            new_text = text[:m.start()]
-            last_run.text = new_text
-            space_pt = len(arrows) * 5
-            _add_space_after(paragraph, space_pt)
-            return
-        m = re.search(r'→+\s*$', text)
-        if m:
-            new_text = text[:m.start()]
-            last_run.text = new_text
-            self._suppress_next_first_line_indent_from_arrow = True
+            markers = m.group(1)
+            text = text[:m.start()]
+            last_run.text = text
+            space_count = markers.count('›')
+            if space_count:
+                _add_space_after(paragraph, space_count * 5)
+            if '→' in markers:
+                self._suppress_next_first_line_indent_from_arrow = True
+            filler_count = markers.count('⋙')
+            for _ in range(filler_count):
+                spacer = self.doc.add_paragraph()
+                try:
+                    spacer.style = paragraph.style.name
+                except Exception:
+                    pass
+                _set_space_after(spacer, 0)
+                _set_space_before(spacer, 0)
+                _disable_contextual_spacing(spacer)
 
     def _apply_pending_break_indent_rule(self, paragraph):
         if not self._suppress_next_first_line_indent:
@@ -1044,7 +1096,6 @@ class DocxBuilder:
                     self._current_block_style = style_config.style_name
                     self._current_block_style_config = style_config
                     self._is_first_para_in_block = True
-                    self._suppress_next_first_line_indent_from_arrow = False
         elif full_text.startswith("<!--block_end:"):
             self._current_block_style = None
             self._current_block_style_config = None
@@ -1068,6 +1119,9 @@ class DocxBuilder:
                         link_style=self._hyperlink_style_id
                     )
                     self._apply_pending_break_indent_rule(p)
+                    if self._suppress_next_first_line_indent_from_arrow:
+                        p.paragraph_format.first_line_indent = Pt(0)
+                        self._suppress_next_first_line_indent_from_arrow = False
                     self._apply_indent_from_arrows(p)
                     return p
                 else:
@@ -1086,6 +1140,9 @@ class DocxBuilder:
                             link_style=self._hyperlink_style_id
                         )
                         self._apply_pending_break_indent_rule(p)
+                        if self._suppress_next_first_line_indent_from_arrow:
+                            p.paragraph_format.first_line_indent = Pt(0)
+                            self._suppress_next_first_line_indent_from_arrow = False
                         self._apply_indent_from_arrows(p)
                         return p
 
@@ -1101,3 +1158,17 @@ class DocxBuilder:
         else:
             run.add_break(WD_BREAK.COLUMN)
         return p
+
+    def _get_line_style_key(self, full_text: str) -> str | None:
+        match = re.match(r"<!--line_style:([^>]+)-->", full_text)
+        if match:
+            return match.group(1).strip()
+        return None
+
+    def _get_line_style_name(self, key: str) -> str:
+        if not key:
+            return "Horizontal Line"
+        style = self.config.get_line_style(key)
+        if style:
+            return style.style_name
+        return "Horizontal Line"

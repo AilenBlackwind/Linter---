@@ -91,6 +91,16 @@ class InfoboxStyle:
         self.list_number_style = data.get("list_number_style", "")
 
 
+class LineStyle:
+    def __init__(self, key: str, data: dict):
+        self.key = key
+        self.style_name = data.get("style_name", "Horizontal Line")
+        self.tag = data.get("tag", f"#st/{key}")
+
+    def __repr__(self):
+        return f"LineStyle(key={self.key}, style_name={self.style_name})"
+
+
 class TableStyle:
     def __init__(self, name: str, data: dict):
         self.name = name
@@ -137,6 +147,7 @@ class Config:
 
         self.infobox_styles = {}
         self.single_paragraph_styles = {}
+        self.line_styles: Dict[str, LineStyle] = {}
 
         infobox_config = styles_data.get("infobox_styles", {})
         for key, style_def in infobox_config.items():
@@ -149,6 +160,10 @@ class Config:
                 "style_name": style_def.get("style_name"),
                 "tag": style_def.get("tag", f"::: {key}")
             }
+
+        line_styles_data = styles_data.get("line_styles", {})
+        for key, data in line_styles_data.items():
+            self.line_styles[key] = LineStyle(key, data)
 
         spacing = spacing_data or {}
         self.before_heading_spacing = spacing.get("before_heading", 25)
@@ -191,6 +206,9 @@ class Config:
 
     def get_single_paragraph_style(self, key: str) -> Optional[dict]:
         return self.single_paragraph_styles.get(key)
+
+    def get_line_style(self, key: str) -> Optional[LineStyle]:
+        return self.line_styles.get(key)
 
     def get_table_style(self, name: Optional[str] = None) -> TableStyle:
         if name and name in self.table_styles:

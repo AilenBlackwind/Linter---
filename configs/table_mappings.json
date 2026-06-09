@@ -28,5 +28,17 @@
     "header": "Zebra Header",
     "text": "Zebra Text",
     "preset": "zebra"
+  },
+  "‹!m2_zebra›": {
+    "table": "Простая таблица 1",
+    "header": "Zebra Text",
+    "text": "Zebra Text",
+    "preset": "m2_zebra"
+  },
+  "‹!m_zebra›": {
+    "table": "Простая таблица 1",
+    "header": "Zebra Header",
+    "text": "Zebra Text",
+    "preset": "Mage_zebra"
   }
 }

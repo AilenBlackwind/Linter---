@@ -3,7 +3,7 @@
     "info": {
       "style_name": "Infobox Info",
       "multi_paragraph": true,
-      "opening_tag": ":::!info",
+      "opening_tag": ":::info",
       "closing_tag": ":::",
       "list_bullet_style": "List Info",
       "list_number_style": ""
@@ -11,7 +11,7 @@
     "warning": {
       "style_name": "Infobox Warning",
       "multi_paragraph": true,
-      "opening_tag": ":::!warning",
+      "opening_tag": ":::warning",
       "closing_tag": ":::",
       "list_bullet_style": "List Warning",
       "list_number_style": ""
@@ -19,7 +19,7 @@
     "rule": {
       "style_name": "Infobox Rule",
       "multi_paragraph": true,
-      "opening_tag": ":::!rule",
+      "opening_tag": ":::rule",
       "closing_tag": ":::",
       "list_bullet_style": "",
       "list_number_style": ""
@@ -27,7 +27,7 @@
     "example": {
       "style_name": "Infobox Example",
       "multi_paragraph": true,
-      "opening_tag": ":::!example",
+      "opening_tag": ":::example",
       "closing_tag": ":::",
       "list_bullet_style": "",
       "list_number_style": ""
@@ -39,30 +39,52 @@
       "closing_tag": ":::",
       "list_bullet_style": "",
       "list_number_style": ""
+    },
+    "Mage_Example": {
+      "style_name": "Mage Example",
+      "multi_paragraph": true,
+      "opening_tag": ":::m_example",
+      "closing_tag": ":::",
+      "list_bullet_style": "ListMageExample",
+      "list_number_style": ""
     }
   },
   "inline_styles": {
     "single_paragraph": {
       "Info": {
         "style_name": "Infobox Info",
-        "tag": ":::!info"
+        "tag": ":::info"
       },
       "Warning": {
         "style_name": "Infobox Warning",
-        "tag": ":::!warning"
+        "tag": ":::warning"
       },
       "Rule": {
         "style_name": "Infobox Rule",
-        "tag": ":::!rule"
+        "tag": ":::rule"
       },
       "Example": {
         "style_name": "Infobox Example",
-        "tag": ":::!example"
+        "tag": ":::example"
       },
       "tag": {
         "style_name": "Text Tag",
         "tag": ":::tag"
       }
+    }
+  },
+  "line_styles": {
+    "purple-line": {
+      "style_name": "Purple Line",
+      "tag": "#st/purple-line"
+    },
+    "red-line": {
+      "style_name": "Red Line",
+      "tag": "#st/red-line"
+    },
+    "blue-line": {
+      "style_name": "Normal",
+      "tag": "#st/blue-line"
     }
   }
 }
