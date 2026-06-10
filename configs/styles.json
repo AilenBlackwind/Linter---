@@ -86,5 +86,34 @@
       "style_name": "Normal",
       "tag": "#st/blue-line"
     }
+  },
+  "custom_colors": {
+    "red": "FF0000",
+    "green": "00AA00",
+    "blue": "0000FF",
+    "cyan": "00FFFF",
+    "magenta": "FF00FF",
+    "yellow": "FFFF00",
+    "black": "1A1A1A",
+    "white": "FFFFFF",
+    "gray": "808080",
+    "purple": "800080",
+    "orange": "FFA500",
+    "brown": "A52A2A",
+    "darkred": "8B0000",
+    "darkgreen": "006400",
+    "darkblue": "00008B",
+    "pink": "FFC0CB",
+    "gold": "FFD700",
+    "silver": "C0C0C0",
+    "forces": "FF8200",
+    "spirit": "FFD966",
+    "life": "FF0000",
+    "matter": "B16E60",
+    "time": "75CE4E",
+    "correspondence": "FF00FF",
+    "prime": "999999",
+    "mind": "0090FF",
+    "entropy": "9900FF"
   }
 }

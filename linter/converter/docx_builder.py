@@ -551,8 +551,15 @@ class DocxBuilder:
             if shd is not None:
                 tcPr.remove(shd)
             tcBorders = tcPr.find(qn('w:tcBorders'))
-            if tcBorders is not None:
-                tcPr.remove(tcBorders)
+            if tcBorders is None:
+                tcBorders = OxmlElement('w:tcBorders')
+                tcPr.append(tcBorders)
+            for edge in ('top', 'left', 'bottom', 'right'):
+                edge_el = tcBorders.find(qn(f'w:{edge}'))
+                if edge_el is None:
+                    edge_el = OxmlElement(f'w:{edge}')
+                    tcBorders.append(edge_el)
+                edge_el.set(qn('w:val'), 'nil')
 
         trPr = row._tr.get_or_add_trPr()
         trHeight = trPr.find(qn('w:trHeight'))
@@ -608,10 +615,18 @@ class DocxBuilder:
                             tblSpacing.set(qn('w:before'), str(twips))
             prev = child
 
+    def _track_keep_together_para(self, para):
+        if self._in_keep_together and para is not None:
+            if self._keep_together_last_para is not None:
+                self._keep_together_last_para.paragraph_format.keep_with_next = True
+            self._keep_together_last_para = para
+
     def _process_ast(self, ast: list) -> None:
         last_paragraph = None
         has_content = False
         next_table_config = None
+        self._in_keep_together = False
+        self._keep_together_last_para = None
 
         i = 0
         n = len(ast)
@@ -643,6 +658,7 @@ class DocxBuilder:
                 marker_para = self._handle_style_marker(node, check_text)
                 if marker_para is not None:
                     last_paragraph = marker_para
+                    self._track_keep_together_para(last_paragraph)
                     next_is_heading_flag = False
                     for jj in range(i + 1, n):
                         nn = ast[jj]
@@ -668,6 +684,7 @@ class DocxBuilder:
             if check_text.startswith("<!--break:"):
                 self._handle_break_marker(check_text)
                 last_paragraph = None
+                self._keep_together_last_para = None
                 has_content = True
                 self._last_block_type = None
                 self._last_para_style_name = None
@@ -676,14 +693,45 @@ class DocxBuilder:
                 i += 1
                 continue
 
+            if check_text == "<!--keep_together_start-->":
+                self._in_keep_together = True
+                i += 1
+                continue
+            if check_text == "<!--keep_together_end-->":
+                self._in_keep_together = False
+                self._keep_together_last_para = None
+                i += 1
+                continue
+
             if check_text.startswith("<!--line_style:"):
                 style_key = self._get_line_style_key(check_text)
                 style_name = self._get_line_style_name(style_key)
                 last_paragraph = self.doc.add_paragraph("\u00a0", style=style_name)
+                self._track_keep_together_para(last_paragraph)
                 has_content = True
                 self._last_block_type = 'thematic_break'
                 self._last_para_style_name = style_name
                 self._last_paragraph = last_paragraph
+
+                arrows = self._get_line_style_arrows(check_text)
+                if arrows:
+                    space_count = arrows.count('›')
+                    if space_count:
+                        _add_space_after(last_paragraph, space_count * 5)
+                    if '→' in arrows:
+                        self._suppress_next_first_line_indent_from_arrow = True
+                    filler_count = arrows.count('⋙')
+                    for _ in range(filler_count):
+                        spacer = self.doc.add_paragraph()
+                        self._track_keep_together_para(spacer)
+                        try:
+                            spacer.style = last_paragraph.style.name
+                        except Exception:
+                            pass
+                        _set_space_after(spacer, 0)
+                        _set_space_before(spacer, 0)
+                        _disable_contextual_spacing(spacer)
+
                 for jj in range(i + 1, n):
                     nn = ast[jj]
                     if nn.get('type') == 'blank_line':
@@ -796,11 +844,13 @@ class DocxBuilder:
                 next_node_type is not None):
                 _add_space_after(last_paragraph, self.config.after_list_spacing)
 
+            if n_type != 'table':
+                self._track_keep_together_para(last_paragraph)
             i += 1
 
     def _process_heading(self, node: dict, has_content: bool):
         level = node.get('attrs', {}).get('level', 1)
-        text = _get_text_recursive(node)
+        children = node.get('children', [])
 
         if level == 1:
             if not has_content:
@@ -809,15 +859,17 @@ class DocxBuilder:
                 sec_h1 = self.doc.add_section(WD_SECTION.NEW_PAGE)
                 _force_auto_height_and_cols(sec_h1, 1)
 
-            h = self.doc.add_heading(text, level=1)
+            h = self.doc.add_paragraph(style='Heading 1')
+            _add_formatted_text(h, children, part=self.doc.part, link_style=self._hyperlink_style_id)
             h.alignment = 1
 
             sec_text = self.doc.add_section(WD_SECTION.CONTINUOUS)
             _force_auto_height_and_cols(sec_text, self._cols_num, self._cols_space, self._cols_equal_width)
-            return None
+            return h
         else:
-            self.doc.add_heading(text, level=level)
-            return None
+            h = self.doc.add_paragraph(style=f'Heading {level}')
+            _add_formatted_text(h, children, part=self.doc.part, link_style=self._hyperlink_style_id)
+            return h
 
     def _process_list(self, list_node: dict, ordered: bool = False, level: int = 0):
         style_name = self._resolve_list_style_name(ordered, level)
@@ -1160,10 +1212,16 @@ class DocxBuilder:
         return p
 
     def _get_line_style_key(self, full_text: str) -> str | None:
-        match = re.match(r"<!--line_style:([^>]+)-->", full_text)
+        match = re.match(r"<!--line_style:([^>|]+?)(?:-->|\|)", full_text)
         if match:
             return match.group(1).strip()
         return None
+
+    def _get_line_style_arrows(self, full_text: str) -> str:
+        match = re.search(r"\|arrows:([›→⋙]+)-->", full_text)
+        if match:
+            return match.group(1)
+        return ""
 
     def _get_line_style_name(self, key: str) -> str:
         if not key:

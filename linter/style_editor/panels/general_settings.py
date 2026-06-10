@@ -14,6 +14,7 @@ from PyQt5.QtCore import Qt
 
 from ..style_data_manager import StyleDataManager
 from ..widgets.json_preview import JsonPreviewWidget
+from .color_tags import ColorTagsPanel
 
 
 class GeneralSettingsWidget(QWidget):
@@ -82,6 +83,10 @@ class GeneralSettingsWidget(QWidget):
         line_tab = QWidget()
         self._setup_line_styles_tab(line_tab)
         self.general_tabs.addTab(line_tab, "\u041B\u0418\u041D\u0418\u0418")
+
+        color_tab = QWidget()
+        self._setup_color_tags_tab(color_tab)
+        self.general_tabs.addTab(color_tab, "\u0426\u0412\u0415\u0422\u0410")
 
         self.general_json_preview = JsonPreviewWidget()
         self.general_tabs.addTab(self.general_json_preview, "JSON")
@@ -299,6 +304,16 @@ class GeneralSettingsWidget(QWidget):
         props_layout.addStretch()
         layout.addWidget(props_group, stretch=2)
 
+    def _setup_color_tags_tab(self, container):
+        layout = QVBoxLayout(container)
+        self.color_tags_panel = ColorTagsPanel()
+        self.color_tags_panel.data_changed.connect(self._on_color_tags_changed)
+        layout.addWidget(self.color_tags_panel)
+
+    def _on_color_tags_changed(self):
+        self._update_general_json_preview()
+        self._save_general_styles_to_disk()
+
     def _on_line_style_add(self):
         base = "new_line"
         name = base
@@ -475,6 +490,9 @@ class GeneralSettingsWidget(QWidget):
                     "style_name": sdef.get("style_name", ""),
                 }
 
+        custom_colors = raw.get("custom_colors", {})
+        self.color_tags_panel.load_data(custom_colors if isinstance(custom_colors, dict) else {})
+
         self._populate_para_style_list()
         self._fill_para_word_style_combo()
         self._populate_line_style_list()
@@ -597,6 +615,7 @@ class GeneralSettingsWidget(QWidget):
                 "single_paragraph": single_styles,
             },
             "line_styles": line_styles,
+            "custom_colors": self.color_tags_panel.get_data(),
         }
 
     def _on_para_style_selected(self, row: int):

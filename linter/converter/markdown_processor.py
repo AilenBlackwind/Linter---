@@ -3,6 +3,7 @@ from linter.config import Config
 
 _BREAK_INLINE_RE = re.compile(r'‹!br[pc]›', re.IGNORECASE)
 _BREAK_HTML_RE = re.compile(r'<!--break:(page|column)-->')
+_CUSTOM_COLOR_RE = re.compile(r'~=\{([^}]+)\}(.*?)=\s*~')
 
 
 def _replace_break(m):
@@ -70,15 +71,40 @@ def preprocess_markdown(md_text: str, config: Config) -> str:
     events = []
 
     open_stack = []
+    keep_stack = []
 
     line_style_tags = set()
     for key in config.line_styles:
         line_style_tags.add(key.lower())
-    LINE_STYLE_RE = re.compile(r'^\s*#st/(\S+)\s*$', re.IGNORECASE)
+    LINE_STYLE_RE = re.compile(r'^\s*#st/(\S+?)([›→⋙]*)\s*$', re.IGNORECASE)
+
+    custom_colors = config.custom_colors
+
+    def _replace_custom_color(m):
+        tag = m.group(1)
+        text = m.group(2)
+        hex_color = custom_colors.get(tag.lower(), tag.upper())
+        hex_color = hex_color.lstrip('#')
+        if not re.match(r'^[0-9A-Fa-f]{6}$', hex_color):
+            return m.group(0)
+        return f'<font color="{hex_color}">{text}</font>'
 
     for i in range(n):
         line = lines[i]
-        stripped_lower = line.strip().lower()
+        line = _CUSTOM_COLOR_RE.sub(_replace_custom_color, line)
+        lines[i] = line
+        stripped = line.strip()
+        stripped_lower = stripped.lower()
+
+        if stripped == '{{{':
+            keep_stack.append(i)
+            continue
+        if stripped == '}}}':
+            if keep_stack:
+                open_idx = keep_stack.pop()
+                events.append((open_idx, 'keep_open', ''))
+                events.append((i, 'keep_close', ''))
+            continue
 
         if stripped_lower in (':::', '::::'):
             if open_stack:
@@ -133,12 +159,18 @@ def preprocess_markdown(md_text: str, config: Config) -> str:
                     pending_single_open = data
                 elif evt_type == 'open_single_tag':
                     pending_single_tag = data
+                elif evt_type == 'keep_open':
+                    new_lines.append('<!--keep_together_start-->')
+                elif evt_type == 'keep_close':
+                    new_lines.append('<!--keep_together_end-->')
 
         stripped = line.strip()
         stripped_lower = stripped.lower()
         is_only_tag_or_close = False
 
-        if stripped_lower in (':::', '::::'):
+        if stripped in ('{{{', '}}}'):
+            is_only_tag_or_close = True
+        elif stripped_lower in (':::', '::::'):
             is_only_tag_or_close = True
         else:
             key, is_single, _ = get_key_if_tag_line(line)
@@ -150,20 +182,29 @@ def preprocess_markdown(md_text: str, config: Config) -> str:
 
         m = LINE_STYLE_RE.match(line)
         if m and m.group(1).lower() in line_style_tags:
-            new_lines.append(f"<!--line_style:{m.group(1)}-->")
+            arrows = m.group(2)
+            if arrows:
+                new_lines.append(f"<!--line_style:{m.group(1)}|arrows:{arrows}-->")
+            else:
+                new_lines.append(f"<!--line_style:{m.group(1)}-->")
             continue
 
         line = _BREAK_INLINE_RE.sub(_replace_break, line)
 
         # If break marker is at line start, mistune treats it as block HTML
         # and eats following text. Split marker onto its own line.
+        break_extracted = False
         while True:
             m = _BREAK_HTML_RE.match(line)
             if m and m.start() == 0:
                 new_lines.append(line[:m.end()])
                 line = line[m.end():]
+                break_extracted = True
             else:
                 break
+
+        if not line and break_extracted:
+            continue
 
         if pending_single_tag is not None:
             if stripped:

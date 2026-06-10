@@ -148,6 +148,7 @@ class Config:
         self.infobox_styles = {}
         self.single_paragraph_styles = {}
         self.line_styles: Dict[str, LineStyle] = {}
+        self.custom_colors: Dict[str, str] = styles_data.get("custom_colors", {})
 
         infobox_config = styles_data.get("infobox_styles", {})
         for key, style_def in infobox_config.items():
