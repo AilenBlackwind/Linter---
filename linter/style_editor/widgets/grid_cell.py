@@ -26,6 +26,8 @@ class GridCellWidget(QFrame):
         self.col = col
         self._selected = False
         self._shading: Optional[str] = None
+        self._bold: Optional[bool] = None
+        self._italic: Optional[bool] = None
         self._text = ""
         self._borders: Dict[str, CellBorderStyle] = {}
         self._set_cell_text()
@@ -43,6 +45,14 @@ class GridCellWidget(QFrame):
 
     def set_shading(self, hex_color: Optional[str]):
         self._shading = hex_color
+        self.update()
+
+    def set_bold(self, bold: Optional[bool]):
+        self._bold = bold
+        self.update()
+
+    def set_italic(self, italic: Optional[bool]):
+        self._italic = italic
         self.update()
 
     def set_border(self, side: str, style: Optional[CellBorderStyle]):
@@ -119,8 +129,18 @@ class GridCellWidget(QFrame):
             painter.setPen(pen)
             painter.drawRect(rect.adjusted(1, 1, -1, -1))
 
-        painter.setPen(QColor(0, 0, 0))
         font = QFont()
         font.setPointSize(10)
+        if self._bold is True:
+            font.setBold(True)
+        if self._italic is True:
+            font.setItalic(True)
         painter.setFont(font)
+
+        if self._bold is True or self._italic is True:
+            painter.setPen(QColor(0, 0, 0))
+        elif self._bold is False or self._italic is False:
+            painter.setPen(QColor(80, 80, 80))
+        else:
+            painter.setPen(QColor(160, 160, 160))
         painter.drawText(rect, Qt.AlignCenter, self._text)

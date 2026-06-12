@@ -29,6 +29,12 @@
     "text": "Zebra Text",
     "preset": "zebra"
   },
+  "‹!ms_zebra›": {
+    "table": "Простая таблица 1",
+    "header": "Zebra Header",
+    "text": "Small Text",
+    "preset": "MSmal_BaseZebra"
+  },
   "‹!m2_zebra›": {
     "table": "Простая таблица 1",
     "header": "Zebra Text",

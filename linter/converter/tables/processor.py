@@ -182,6 +182,16 @@ def apply_zebra_preset(table, preset):
             inner_v_color = bs.get('color', inner_v_color)
             break
 
+    max_override_row = 0
+    if isinstance(cell_overrides, dict):
+        for key in cell_overrides:
+            try:
+                row_num = int(key[1:])
+                if row_num > max_override_row:
+                    max_override_row = row_num
+            except (ValueError, IndexError):
+                pass
+
     for row_idx, row in enumerate(table.rows):
         is_header = row_idx == 0
         if is_header:
@@ -211,6 +221,10 @@ def apply_zebra_preset(table, preset):
             col_letter = chr(ord('A') + cell_idx)
             cell_ref = f"{col_letter}{row_idx + 1}"
             override = cell_overrides.get(cell_ref) if isinstance(cell_overrides, dict) else None
+            if override is None and max_override_row > 0 and row_idx + 1 > max_override_row:
+                alt_row = max_override_row - 1 + (row_idx + 1 - max_override_row + 1) % 2
+                cell_ref = f"{col_letter}{alt_row}"
+                override = cell_overrides.get(cell_ref)
             if override:
                 if override.get('shading'):
                     set_cell_shading(cell, override['shading'])

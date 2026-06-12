@@ -487,7 +487,7 @@ class DocxBuilder:
                 cell_children = cell_node.get('children', [])
                 if cell_children:
                     _add_formatted_text(p, cell_children, part=self.doc.part, link_style=self._hyperlink_style_id)
-                format_cell_paragraph(p, table_config.get('header'), bold=True)
+                format_cell_paragraph(p, table_config.get('header'), bold=False)
                 _apply_heading_style_in_cell(p)
 
         for row_node in body_rows_nodes:
@@ -548,8 +548,12 @@ class DocxBuilder:
                 p.clear()
             tcPr = cell._tc.get_or_add_tcPr()
             shd = tcPr.find(qn('w:shd'))
-            if shd is not None:
-                tcPr.remove(shd)
+            if shd is None:
+                shd = OxmlElement('w:shd')
+                tcPr.append(shd)
+            shd.set(qn('w:val'), 'clear')
+            shd.set(qn('w:color'), 'auto')
+            shd.set(qn('w:fill'), 'auto')
             tcBorders = tcPr.find(qn('w:tcBorders'))
             if tcBorders is None:
                 tcBorders = OxmlElement('w:tcBorders')
@@ -617,6 +621,7 @@ class DocxBuilder:
 
     def _track_keep_together_para(self, para):
         if self._in_keep_together and para is not None:
+            para.paragraph_format.keep_together = True
             if self._keep_together_last_para is not None:
                 self._keep_together_last_para.paragraph_format.keep_with_next = True
             self._keep_together_last_para = para

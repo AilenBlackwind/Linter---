@@ -176,10 +176,13 @@ class AdvancedTableRenderer:
         self.rules_engine = RulesEngine(table_style.color_rules)
 
         self._cell_override_cache: Dict[Tuple[int, int], CellOverride] = {}
+        self._max_cell_row = 0
         for override in table_style.cell_overrides:
             try:
                 row_idx, col_idx = cell_ref_to_indices(override.cell_ref)
                 self._cell_override_cache[(row_idx, col_idx)] = override
+                if row_idx > self._max_cell_row:
+                    self._max_cell_row = row_idx
             except:
                 pass
 
@@ -248,6 +251,9 @@ class AdvancedTableRenderer:
                     style['borders'][side] = bs
 
         cell_key = (row_idx, col_idx)
+        if cell_key not in self._cell_override_cache and self._max_cell_row > 0 and row_idx > self._max_cell_row:
+            alt_row = self._max_cell_row - 1 + (row_idx - self._max_cell_row + 1) % 2
+            cell_key = (alt_row, col_idx)
         if cell_key in self._cell_override_cache:
             override = self._cell_override_cache[cell_key]
             if override.shading:

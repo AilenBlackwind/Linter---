@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from typing import Dict, Any, Optional, List
+import copy
 
 from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout,
@@ -45,6 +46,9 @@ class GeneralSettingsWidget(QWidget):
         self.para_add_btn = QPushButton("+ \u041D\u043E\u0432\u044B\u0439")
         self.para_add_btn.clicked.connect(self._on_para_style_add)
         btn_layout.addWidget(self.para_add_btn)
+        self.para_dup_btn = QPushButton("\u2261 \u041A\u043E\u043F\u0438\u044F")
+        self.para_dup_btn.clicked.connect(self._on_para_style_duplicate)
+        btn_layout.addWidget(self.para_dup_btn)
         self.para_delete_btn = QPushButton("- \u0423\u0434\u0430\u043B\u0438\u0442\u044C")
         self.para_delete_btn.clicked.connect(self._on_para_style_delete)
         btn_layout.addWidget(self.para_delete_btn)
@@ -261,6 +265,9 @@ class GeneralSettingsWidget(QWidget):
         self.line_add_btn = QPushButton("+ \u041D\u043E\u0432\u0430\u044F")
         self.line_add_btn.clicked.connect(self._on_line_style_add)
         btn_layout.addWidget(self.line_add_btn)
+        self.line_dup_btn = QPushButton("\u2261 \u041A\u043E\u043F\u0438\u044F")
+        self.line_dup_btn.clicked.connect(self._on_line_style_duplicate)
+        btn_layout.addWidget(self.line_dup_btn)
         self.line_delete_btn = QPushButton("- \u0423\u0434\u0430\u043B\u0438\u0442\u044C")
         self.line_delete_btn.clicked.connect(self._on_line_style_delete)
         btn_layout.addWidget(self.line_delete_btn)
@@ -326,6 +333,25 @@ class GeneralSettingsWidget(QWidget):
         }
         item = QListWidgetItem(name)
         self.line_style_list.addItem(item)
+        self.line_style_list.setCurrentRow(self.line_style_list.count() - 1)
+        self._save_general_styles_to_disk()
+
+    def _on_line_style_duplicate(self):
+        item = self.line_style_list.currentItem()
+        if not item:
+            return
+        old_name = item.text()
+        base = old_name + "_copy"
+        new_name = base
+        idx = 1
+        while new_name in self._line_styles_data:
+            idx += 1
+            new_name = f"{base}_{idx}"
+
+        self._line_styles_data[new_name] = copy.deepcopy(self._line_styles_data[old_name])
+
+        list_item = QListWidgetItem(new_name)
+        self.line_style_list.addItem(list_item)
         self.line_style_list.setCurrentRow(self.line_style_list.count() - 1)
         self._save_general_styles_to_disk()
 
@@ -652,6 +678,26 @@ class GeneralSettingsWidget(QWidget):
             "list_number_style": "",
         }
         item = QListWidgetItem(name)
+        item.setFlags(item.flags() | Qt.ItemIsEditable)
+        self.para_style_list.addItem(item)
+        self.para_style_list.setCurrentRow(self.para_style_list.count() - 1)
+        self._save_general_styles_to_disk()
+
+    def _on_para_style_duplicate(self):
+        if not self._selected_para_key:
+            return
+        old_name = self._selected_para_key
+        base = old_name + "_copy"
+        new_name = base
+        idx = 1
+        while new_name in self._para_styles_data:
+            idx += 1
+            new_name = f"{base}_{idx}"
+
+        self._para_styles_data[new_name] = copy.deepcopy(self._para_styles_data[old_name])
+        self._para_styles_data[new_name]["tag"] = f":::{new_name}"
+
+        item = QListWidgetItem(new_name)
         item.setFlags(item.flags() | Qt.ItemIsEditable)
         self.para_style_list.addItem(item)
         self.para_style_list.setCurrentRow(self.para_style_list.count() - 1)

@@ -11,7 +11,7 @@ from PyQt5.QtCore import Qt, pyqtSignal, QEvent
 from linter.converter.tables.advanced.models import TableStyle
 
 from .grid_cell import GridCellWidget, CellBorderStyle
-from ..style_utils import get_cell_shading, get_cell_borders
+from ..style_utils import get_cell_shading, get_cell_bold, get_cell_italic, get_cell_borders
 
 
 GRID_SIZE = 6
@@ -148,8 +148,12 @@ class VisualGridWidget(QWidget):
         for row in range(GRID_SIZE):
             for col in range(GRID_SIZE):
                 shading = get_cell_shading(style, row, col, GRID_SIZE, GRID_SIZE)
+                bold = get_cell_bold(style, row, col, GRID_SIZE, GRID_SIZE)
+                italic = get_cell_italic(style, row, col, GRID_SIZE, GRID_SIZE)
                 borders = get_cell_borders(style, row, col, GRID_SIZE, GRID_SIZE)
                 self._grid_widgets[row][col].set_shading(shading)
+                self._grid_widgets[row][col].set_bold(bold)
+                self._grid_widgets[row][col].set_italic(italic)
 
                 self._grid_widgets[row][col].clear_borders()
                 for side, border_style in borders.items():

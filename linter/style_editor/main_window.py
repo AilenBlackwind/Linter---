@@ -17,6 +17,8 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt
 
+import copy as py_copy
+
 from linter.converter.tables.advanced.models import (
     TableStyle, RowTypeStyle, CellOverride, BorderStyle
 )
@@ -32,7 +34,9 @@ from .panels.properties import PropertiesPanel
 from .panels.color_rules import ColorRulesWidget
 from .panels.table_structure import TableStructurePanel
 from .panels.general_settings import GeneralSettingsWidget
-from .style_utils import get_cell_shading, expand_border_side
+from .style_utils import (
+    get_cell_shading, get_cell_bold, get_cell_italic, expand_border_side
+)
 from .mapping_utils import find_mapping_for_style
 from .style_data_manager import StyleDataManager
 
@@ -104,6 +108,7 @@ class StyleEditorMainWindow(QMainWindow):
         self.style_list_panel.style_deleted.connect(self._on_style_deleted)
         self.style_list_panel.save_requested.connect(self._save_styles)
         self.style_list_panel.style_renamed.connect(self._on_style_renamed)
+        self.style_list_panel.duplicate_requested.connect(self._on_style_duplicated)
         self.style_list_panel.setMaximumWidth(250)
         layout.addWidget(self.style_list_panel)
 
@@ -136,6 +141,7 @@ class StyleEditorMainWindow(QMainWindow):
         self.properties_panel.property_changed.connect(self._on_property_changed)
         self.properties_panel.apply_border_clicked.connect(self._on_apply_border)
         self.properties_panel.clear_borders_clicked.connect(self._on_clear_borders)
+        self.properties_panel.target_combo.currentIndexChanged.connect(self._on_editor_target_changed)
         right_layout.addWidget(self.properties_panel)
 
         right_panel.setMaximumWidth(380)
@@ -207,6 +213,17 @@ class StyleEditorMainWindow(QMainWindow):
             "preset": name
         }
 
+    def _on_style_duplicated(self, old_name: str, new_name: str):
+        if old_name in self._styles:
+            self._styles[new_name] = py_copy.deepcopy(self._styles[old_name])
+
+        old_tag, old_mapping = find_mapping_for_style(self._mappings, old_name)
+        if old_mapping:
+            new_tag = "‹!" + new_name + "›"
+            new_mapping = dict(old_mapping)
+            new_mapping["preset"] = new_name
+            self._mappings[new_tag] = new_mapping
+
     def _on_style_deleted(self, name: str):
         if name in self._styles:
             del self._styles[name]
@@ -228,6 +245,7 @@ class StyleEditorMainWindow(QMainWindow):
         self.grid_widget.set_style_name(name)
         self._update_json_preview()
         self.color_rules_widget.set_rules(self._current_style.color_rules)
+        self._load_panel_from_target(self.properties_panel.get_target())
 
         tag, found_mapping = find_mapping_for_style(self._mappings, name)
         self.structure_panel.set_tag(tag)
@@ -267,7 +285,14 @@ class StyleEditorMainWindow(QMainWindow):
         if not self.grid_widget.selected_cells or not self._current_style:
             return
 
+        target = self.properties_panel.get_target()
+        if target == "cell_override":
+            self._load_panel_from_selected_cells()
+
+    def _load_panel_from_selected_cells(self):
         selected = self.grid_widget.selected_cells
+        if not selected:
+            return
         first_cell = next(iter(selected))
         row, col = first_cell
 
@@ -316,6 +341,36 @@ class StyleEditorMainWindow(QMainWindow):
         else:
             self.properties_panel.set_font_color(None)
 
+    def _on_editor_target_changed(self, _index: int):
+        if self._current_style is None:
+            return
+        target = self.properties_panel.get_target()
+        self._load_panel_from_target(target)
+
+    def _load_panel_from_target(self, target: str):
+        if self._current_style is None:
+            return
+
+        if target == "table_defaults":
+            self.properties_panel.set_shading(self._current_style.default_shading)
+            self.properties_panel.set_bold(None)
+            self.properties_panel.set_italic(None)
+            self.properties_panel.set_font_color(None)
+        elif target in ["header", "odd", "even", "last_row", "first_column", "last_column"]:
+            rt = self._current_style.row_types.get(target)
+            if rt:
+                self.properties_panel.set_bold(rt.bold)
+                self.properties_panel.set_italic(rt.italic)
+                self.properties_panel.set_shading(rt.shading if rt.shading else None)
+                self.properties_panel.set_font_color(rt.font_color if rt.font_color else None)
+            else:
+                self.properties_panel.set_bold(None)
+                self.properties_panel.set_italic(None)
+                self.properties_panel.set_shading(None)
+                self.properties_panel.set_font_color(None)
+        elif target == "cell_override":
+            self._load_panel_from_selected_cells()
+
     def _on_tag_changed(self, tag: str):
         if not self._current_style:
             return
@@ -361,10 +416,8 @@ class StyleEditorMainWindow(QMainWindow):
             row_style = self._current_style.row_types[target]
             if use_shading:
                 row_style.shading = shading
-            if bold is not None:
-                row_style.bold = bold
-            if italic is not None:
-                row_style.italic = italic
+            row_style.bold = bold
+            row_style.italic = italic
         elif target == "cell_override":
             for r, c in self.grid_widget.selected_cells:
                 col_letter = chr(ord('A') + c)
@@ -382,10 +435,8 @@ class StyleEditorMainWindow(QMainWindow):
 
                 if use_shading:
                     existing.shading = shading
-                if bold is not None:
-                    existing.bold = bold
-                if italic is not None:
-                    existing.italic = italic
+                existing.bold = bold
+                existing.italic = italic
                 if use_font_color:
                     existing.font_color = font_color
 

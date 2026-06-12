@@ -15,6 +15,7 @@ class StyleListPanel(QWidget):
     style_deleted = pyqtSignal(str)
     save_requested = pyqtSignal()
     style_renamed = pyqtSignal(str, str)
+    duplicate_requested = pyqtSignal(str, str)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -31,6 +32,10 @@ class StyleListPanel(QWidget):
         self.new_btn = QPushButton("+ \u041D\u043E\u0432\u044B\u0439")
         self.new_btn.clicked.connect(self._add_new_style)
         btn_layout.addWidget(self.new_btn)
+
+        self.dup_btn = QPushButton("\u2261 \u041A\u043E\u043F\u0438\u044F")
+        self.dup_btn.clicked.connect(self._duplicate_style)
+        btn_layout.addWidget(self.dup_btn)
 
         self.delete_btn = QPushButton("- \u0423\u0434\u0430\u043B\u0438\u0442\u044C")
         self.delete_btn.clicked.connect(self._delete_selected)
@@ -114,6 +119,25 @@ class StyleListPanel(QWidget):
         self.style_list.addItem(item)
         self.style_list.setCurrentRow(self.style_list.count() - 1)
         self.style_created.emit(name)
+
+    def _duplicate_style(self):
+        item = self.style_list.currentItem()
+        if not item:
+            return
+        old_name = item.text()
+        base = old_name + "_copy"
+        new_name = base
+        idx = 1
+        while new_name in self._style_names:
+            idx += 1
+            new_name = f"{base}_{idx}"
+
+        self._style_names.add(new_name)
+        list_item = QListWidgetItem(new_name)
+        list_item.setFlags(list_item.flags() | Qt.ItemIsEditable)
+        self.style_list.addItem(list_item)
+        self.style_list.setCurrentRow(self.style_list.count() - 1)
+        self.duplicate_requested.emit(old_name, new_name)
 
     def _delete_selected(self):
         item = self.style_list.currentItem()
