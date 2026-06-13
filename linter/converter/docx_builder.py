@@ -621,9 +621,15 @@ class DocxBuilder:
 
     def _track_keep_together_para(self, para):
         if self._in_keep_together and para is not None:
-            para.paragraph_format.keep_together = True
+            pPr = para._element.get_or_add_pPr()
+            for old in pPr.findall(qn('w:keepLines')):
+                pPr.remove(old)
+            pPr.append(OxmlElement('w:keepLines'))
             if self._keep_together_last_para is not None:
-                self._keep_together_last_para.paragraph_format.keep_with_next = True
+                prev_pPr = self._keep_together_last_para._element.get_or_add_pPr()
+                for old in prev_pPr.findall(qn('w:keepNext')):
+                    prev_pPr.remove(old)
+                prev_pPr.append(OxmlElement('w:keepNext'))
             self._keep_together_last_para = para
 
     def _process_ast(self, ast: list) -> None:
@@ -659,6 +665,26 @@ class DocxBuilder:
                 full_text = node['raw']
 
             check_text = full_text.strip()
+
+            if check_text.startswith('<!--') and '\n' in check_text:
+                for subline in check_text.split('\n'):
+                    subline = subline.strip()
+                    if not subline:
+                        continue
+                    if subline.startswith("<!--block_start:") or subline.startswith("<!--single_tag:"):
+                        self._handle_style_marker(node, subline)
+                    elif subline.startswith("<!--block_end:"):
+                        self._handle_style_marker(node, subline)
+                    elif subline.startswith("<!--break:"):
+                        self._handle_break_marker(subline)
+                    elif subline == "<!--keep_together_start-->":
+                        self._in_keep_together = True
+                    elif subline == "<!--keep_together_end-->":
+                        self._in_keep_together = False
+                        self._keep_together_last_para = None
+                i += 1
+                continue
+
             if check_text.startswith("<!--block_start:") or check_text.startswith("<!--single_tag:"):
                 marker_para = self._handle_style_marker(node, check_text)
                 if marker_para is not None:
@@ -906,6 +932,7 @@ class DocxBuilder:
                     if self._suppress_next_first_line_indent_from_arrow:
                         self._suppress_next_first_line_indent_from_arrow = False
 
+            self._track_keep_together_para(p)
             self._last_para_style_name = style_name
             self._last_paragraph = p
 
