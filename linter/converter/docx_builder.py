@@ -408,6 +408,7 @@ class DocxBuilder:
         self._is_first_para_in_block = False
         self._suppress_next_first_line_indent = False
         self._suppress_next_first_line_indent_from_arrow = False
+        self._pending_space_before_points = 0
         self._hyperlink_style_id = _DEFAULT_HYPERLINK_STYLE
         self._cols_num = 1
         self._cols_space = 420
@@ -434,6 +435,8 @@ class DocxBuilder:
         self._markdown_parser = mistune.create_markdown(renderer=None, plugins=['table'])
         ast = self._markdown_parser(processed_md)
         self._process_ast(ast)
+        final_bal = self.doc.add_section(WD_SECTION.CONTINUOUS)
+        _force_auto_height_and_cols(final_bal, 1)
         self._apply_table_spacing()
 
     def save(self, output_path: Path) -> None:
@@ -682,6 +685,8 @@ class DocxBuilder:
                     elif subline == "<!--keep_together_end-->":
                         self._in_keep_together = False
                         self._keep_together_last_para = None
+                    elif subline.startswith("<!--standalone_arrows:"):
+                        self._handle_standalone_arrows(subline)
                 i += 1
                 continue
 
@@ -747,8 +752,10 @@ class DocxBuilder:
                 arrows = self._get_line_style_arrows(check_text)
                 if arrows:
                     space_count = arrows.count('›')
-                    if space_count:
-                        _add_space_after(last_paragraph, space_count * 5)
+                    fine_count = arrows.count('❭')
+                    total = space_count * 5 + fine_count * 1
+                    if total:
+                        _add_space_after(last_paragraph, total)
                     if '→' in arrows:
                         self._suppress_next_first_line_indent_from_arrow = True
                     filler_count = arrows.count('⋙')
@@ -776,6 +783,11 @@ class DocxBuilder:
                         if nl <= 3:
                             _add_space_after(last_paragraph, self.config.before_heading_spacing)
                     break
+                i += 1
+                continue
+
+            if check_text.startswith("<!--standalone_arrows:"):
+                self._handle_standalone_arrows(check_text)
                 i += 1
                 continue
 
@@ -877,6 +889,11 @@ class DocxBuilder:
 
             if n_type != 'table':
                 self._track_keep_together_para(last_paragraph)
+
+            if self._pending_space_before_points > 0 and last_paragraph is not None:
+                _set_space_before(last_paragraph, self._pending_space_before_points)
+                self._pending_space_before_points = 0
+
             i += 1
 
     def _process_heading(self, node: dict, has_content: bool):
@@ -887,6 +904,8 @@ class DocxBuilder:
             if not has_content:
                 _force_auto_height_and_cols(self.doc.sections[0], 1)
             else:
+                bal = self.doc.add_section(WD_SECTION.CONTINUOUS)
+                _force_auto_height_and_cols(bal, 1)
                 sec_h1 = self.doc.add_section(WD_SECTION.NEW_PAGE)
                 _force_auto_height_and_cols(sec_h1, 1)
 
@@ -928,6 +947,7 @@ class DocxBuilder:
 
             if inline_nodes:
                     _add_formatted_text(p, inline_nodes, part=self.doc.part, link_style=self._hyperlink_style_id)
+                    self._apply_space_before_from_arrows(p)
                     self._apply_indent_from_arrows(p)
                     if self._suppress_next_first_line_indent_from_arrow:
                         self._suppress_next_first_line_indent_from_arrow = False
@@ -979,14 +999,16 @@ class DocxBuilder:
         text = last_run.text
         if not text:
             return
-        m = re.search(r'([›→⋙]+)\s*$', text)
+        m = re.search(r'([›→⋙❭]+)\s*$', text)
         if m:
             markers = m.group(1)
             text = text[:m.start()]
             last_run.text = text
             space_count = markers.count('›')
-            if space_count:
-                _add_space_after(paragraph, space_count * 5)
+            fine_count = markers.count('❭')
+            total = space_count * 5 + fine_count * 1
+            if total:
+                _add_space_after(paragraph, total)
             if '→' in markers:
                 self._suppress_next_first_line_indent_from_arrow = True
             filler_count = markers.count('⋙')
@@ -999,6 +1021,21 @@ class DocxBuilder:
                 _set_space_after(spacer, 0)
                 _set_space_before(spacer, 0)
                 _disable_contextual_spacing(spacer)
+
+    def _apply_space_before_from_arrows(self, paragraph):
+        for run in paragraph.runs:
+            text = run.text
+            if text and re.match(r'^[‹❬]', text):
+                m = re.match(r'^([‹❬]+)', text)
+                if m:
+                    markers = m.group(1)
+                    run.text = text[m.end():]
+                    space_count = markers.count('‹')
+                    fine_count = markers.count('❬')
+                    total = space_count * 5 + fine_count * 1
+                    if total > 0:
+                        _set_space_before(paragraph, total)
+                break
 
     def _apply_pending_break_indent_rule(self, paragraph):
         if not self._suppress_next_first_line_indent:
@@ -1049,6 +1086,7 @@ class DocxBuilder:
         self._collapse_spacing_for_related_block_styles(p, style_name)
         self._last_para_style_name = style_name
         self._last_paragraph = p
+        self._apply_space_before_from_arrows(p)
         self._apply_indent_from_arrows(p)
         return p
 
@@ -1206,6 +1244,7 @@ class DocxBuilder:
                     if self._suppress_next_first_line_indent_from_arrow:
                         p.paragraph_format.first_line_indent = Pt(0)
                         self._suppress_next_first_line_indent_from_arrow = False
+                    self._apply_space_before_from_arrows(p)
                     self._apply_indent_from_arrows(p)
                     return p
                 else:
@@ -1227,6 +1266,7 @@ class DocxBuilder:
                         if self._suppress_next_first_line_indent_from_arrow:
                             p.paragraph_format.first_line_indent = Pt(0)
                             self._suppress_next_first_line_indent_from_arrow = False
+                        self._apply_space_before_from_arrows(p)
                         self._apply_indent_from_arrows(p)
                         return p
 
@@ -1243,6 +1283,26 @@ class DocxBuilder:
             run.add_break(WD_BREAK.COLUMN)
         return p
 
+    def _handle_standalone_arrows(self, full_text: str):
+        m = re.search(r'<!--standalone_arrows:([‹❬›❭]+)-->', full_text)
+        if not m:
+            return
+        markers = m.group(1)
+
+        up_count = markers.count('›')
+        up_fine = markers.count('❭')
+        total_after = up_count * 5 + up_fine * 1
+        if total_after > 0:
+            target = self._last_paragraph
+            if target is None and self.doc.paragraphs:
+                target = self.doc.paragraphs[-1]
+            if target is not None:
+                _add_space_after(target, total_after)
+
+        down_count = markers.count('‹')
+        down_fine = markers.count('❬')
+        self._pending_space_before_points = down_count * 5 + down_fine * 1
+
     def _get_line_style_key(self, full_text: str) -> str | None:
         match = re.match(r"<!--line_style:([^>|]+?)(?:-->|\|)", full_text)
         if match:
@@ -1250,7 +1310,7 @@ class DocxBuilder:
         return None
 
     def _get_line_style_arrows(self, full_text: str) -> str:
-        match = re.search(r"\|arrows:([›→⋙]+)-->", full_text)
+        match = re.search(r"\|arrows:([›→⋙❭]+)-->", full_text)
         if match:
             return match.group(1)
         return ""

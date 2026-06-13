@@ -76,7 +76,8 @@ def preprocess_markdown(md_text: str, config: Config) -> str:
     line_style_tags = set()
     for key in config.line_styles:
         line_style_tags.add(key.lower())
-    LINE_STYLE_RE = re.compile(r'^\s*#st/(\S+?)([›→⋙]*)\s*$', re.IGNORECASE)
+    LINE_STYLE_RE = re.compile(r'^\s*#st/(\S+?)([›→⋙❭]*)\s*$', re.IGNORECASE)
+    STANDALONE_ARROW_RE = re.compile(r'^([‹❬›❭]+)\s*$')
 
     custom_colors = config.custom_colors
 
@@ -187,6 +188,11 @@ def preprocess_markdown(md_text: str, config: Config) -> str:
                 new_lines.append(f"<!--line_style:{m.group(1)}|arrows:{arrows}-->")
             else:
                 new_lines.append(f"<!--line_style:{m.group(1)}-->")
+            continue
+
+        m = STANDALONE_ARROW_RE.match(line)
+        if m:
+            new_lines.append(f"<!--standalone_arrows:{m.group(1)}-->")
             continue
 
         line = _BREAK_INLINE_RE.sub(_replace_break, line)
